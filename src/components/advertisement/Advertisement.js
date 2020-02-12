@@ -1,29 +1,10 @@
 import React, { Component } from "react";
+import Comments from "../Comments/Comments";
 
 export default class Advertisement extends Component {
-  showImage() {
-    const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
-    return (
-      <div className="d-flex justify-content-between">
-        <p className="card-text text-left">
-          {this.props.postal_code}
-          <br />
-          {phone}
-        </p>
-        {this.props.imageUrl ? (
-          <img
-            src={this.props.imageUrl}
-            className="img-fluid text-right"
-            alt=""
-          />
-        ) : (
-          ""
-        )}
-        {/* {console.log(this.props)} */}
-      </div>
-    );
-  }
   render() {
+    // console.log(this.props);
+    const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
     return (
       <div>
         <div className="card mb-3">
@@ -34,7 +15,22 @@ export default class Advertisement extends Component {
             <h5 className="card-title text-left">
               {this.props.street}, {this.props.city}, {this.props.state}
             </h5>
-            {this.showImage()}
+            <div className="d-flex justify-content-between">
+              <p className="card-text text-left">
+                {this.props.postal_code}
+                <br />
+                {phone}
+              </p>
+              {this.props.imageUrl ? (
+                <img
+                  src={this.props.imageUrl}
+                  className="img-fluid text-right"
+                  alt=""
+                />
+              ) : (
+                ""
+              )}
+            </div>
             <span className="text-center">
               <a
                 href={this.props.web}
@@ -44,6 +40,12 @@ export default class Advertisement extends Component {
                 Visit our website
               </a>
             </span>
+
+            <Comments
+              id={this.props.id}
+              addComment={this.props.addComment}
+              comments={this.props.comments}
+            />
           </div>
         </div>
       </div>
