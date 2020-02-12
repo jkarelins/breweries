@@ -19,15 +19,15 @@ export default class Main extends Component {
       .then(data => data.json())
       .then(sorted => {
         sorted.map(brewerie => (brewerie.comments = []));
-        this.setState({
-          breweries: sorted
-        });
         return sorted;
       })
-      .then(() => {
-        this.fetchImages();
+      .then(breweries => {
+        this.fetchImages(breweries);
+        this.setState({
+          breweries,
+          loading: false
+        });
       })
-      .then(() => this.setState({ loading: false }))
       .catch(err =>
         this.setState({
           error: err,
@@ -35,9 +35,8 @@ export default class Main extends Component {
         })
       );
   }
-  fetchImages = () => {
-    const brewWithImg = [];
-    this.state.breweries.forEach(brewerie => {
+  fetchImages = breweries => {
+    breweries.forEach(brewerie => {
       const firstWord = brewerie.name.replace(" ", "+").split(" ")[0];
       fetch(
         `https://pixabay.com/api/?key=15235209-ef7229ba5181d19e97e965940&q=${firstWord}&image_type=photo`
@@ -45,15 +44,11 @@ export default class Main extends Component {
         .then(data => data.json())
         .then(data => {
           if (data.total !== 0) {
-            const newObj = brewerie;
-            newObj.image = data.hits[0].webformatURL;
-            brewWithImg.push(newObj);
+            brewerie.image = data.hits[0].webformatURL;
           }
         })
         .catch(err => console.log(err));
     });
-    this.setState({ breweriesWithImages: brewWithImg, ...this.state });
-    // console.log(this.state.breweries);
   };
 
   addComment = commentInfo => {
@@ -70,7 +65,7 @@ export default class Main extends Component {
     } else if (this.state.error) {
       return `<h1>{this.state.error}</h1>`;
     } else {
-      // console.log(this.state.breweries);
+      console.log(this.state.breweries);
       return this.state.breweries.map(brewerie => {
         console.log(brewerie.image);
         return (
@@ -87,7 +82,7 @@ export default class Main extends Component {
             phone={brewerie.phone}
             web={brewerie.website_url}
             update={brewerie.updated_at}
-            image={brewerie.imageUrl}
+            image={brewerie.image}
             addComment={this.addComment}
             comments={brewerie.comments}
           />
