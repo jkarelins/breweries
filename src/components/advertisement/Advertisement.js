@@ -10,6 +10,17 @@ export default class Advertisement extends Component {
           <br />
           {phone}
         </p>
+        <p>
+          <button
+            className="btn btn-outline-dark"
+            onClick={() => console.log("test button like")}
+          >
+            <i className="fab fa-gratipay"> </i>
+          </button>
+          <br />
+          {/* {console.log(this.props)} */}
+          {this.props.brewery.likes} Likes
+        </p>
         {this.props.imageUrl ? (
           <img
             src={this.props.imageUrl}
@@ -19,6 +30,7 @@ export default class Advertisement extends Component {
         ) : (
           ""
         )}
+
         {/* {console.log(this.props)} */}
       </div>
     );

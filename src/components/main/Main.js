@@ -8,18 +8,21 @@ export default class Main extends Component {
     error: null,
     breweriesWithImg: []
   };
+
   sortByType = breweries => {
     return breweries.sort(function(a, b) {
       return a.brewery_type - b.brewery_type;
     });
   };
+
   componentDidMount() {
     fetch("https://api.openbrewerydb.org/breweries")
       .then(data => data.json())
       .then(data => this.sortByType(data))
-      .then(sorted =>
+      .then(sorted => sorted.map(brewery => ({ ...brewery, likes: 0 })))
+      .then(sortedWithLikes =>
         this.setState({
-          breweries: sorted,
+          breweries: sortedWithLikes,
           loading: false
         })
       )
@@ -50,6 +53,7 @@ export default class Main extends Component {
         })
         .catch(err => console.log(err));
     });
+
     this.setState({ breweriesWithImg: breweriesWithImg });
     // console.log(this.state.breweriesWithImg);
   }
