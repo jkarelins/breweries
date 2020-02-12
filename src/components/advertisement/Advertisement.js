@@ -1,29 +1,49 @@
 import React, { Component } from "react";
 
 export default class Advertisement extends Component {
+  showImage() {
+    const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
+    return (
+      <div className="d-flex justify-content-between">
+        <p className="card-text text-left">
+          {this.props.postal_code}
+          <br />
+          {phone}
+        </p>
+        {this.props.imageUrl ? (
+          <img
+            src={this.props.imageUrl}
+            className="img-fluid text-right"
+            alt=""
+          />
+        ) : (
+          ""
+        )}
+        {/* {console.log(this.props)} */}
+      </div>
+    );
+  }
   render() {
     return (
       <div>
         <div className="card mb-3">
-          <div className="card-header">{this.props.name}</div>
+          <div className="card-header">
+            Name: {this.props.name} / Type: {this.props.brType}
+          </div>
           <div className="card-body">
             <h5 className="card-title text-left">
               {this.props.street}, {this.props.city}, {this.props.state}
             </h5>
-            <p className="card-text text-left">
-              {this.props.postal_code}
-              <br />
-              Phone: {this.props.phone}
-              <div className="text-center">
-                <a
-                  href={this.props.web}
-                  target="blank"
-                  className="btn btn-primary"
-                >
-                  Visit our website
-                </a>
-              </div>
-            </p>
+            {this.showImage()}
+            <span className="text-center">
+              <a
+                href={this.props.web}
+                target="blank"
+                className="btn btn-primary text-center"
+              >
+                Visit our website
+              </a>
+            </span>
           </div>
         </div>
       </div>
