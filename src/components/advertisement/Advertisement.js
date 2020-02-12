@@ -17,9 +17,8 @@ export default class Advertisement extends Component {
           >
             <i className="fab fa-gratipay"> </i>
           </button>
-          <br />
           {/* {console.log(this.props)} */}
-          {this.props.brewery.likes} Likes
+          {this.props.brewerie.likes} Likes
         </p>
         {this.props.imageUrl ? (
           <img

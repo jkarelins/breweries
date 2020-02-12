@@ -66,6 +66,7 @@ export default class Main extends Component {
       console.log(this.state.breweriesWithImg);
       return this.state.breweries.map((brewerie, index) => (
         <Advertisement
+          brewerie={brewerie}
           name={brewerie.name}
           key={brewerie.id}
           brType={brewerie.brewery_type}
