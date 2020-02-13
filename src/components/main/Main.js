@@ -21,7 +21,8 @@ export default class Main extends Component {
 
   fetchImages = async breweries => {
     const promises = breweries.map(brewerie => {
-      const firstWord = brewerie.name.replace(/" "/g, "+").split(" ")[0];
+      const firstWord = `beer+${brewerie.name.split(" ")[1]}`;
+      console.log(firstWord);
 
       return fetch(
         `https://pixabay.com/api/?key=15235209-ef7229ba5181d19e97e965940&q=${encodeURIComponent(
@@ -33,7 +34,6 @@ export default class Main extends Component {
           if (data.total !== 0) {
             return { ...brewerie, image: data.hits[0].webformatURL };
           }
-
           return brewerie;
         })
         .catch(err => console.log(err));
