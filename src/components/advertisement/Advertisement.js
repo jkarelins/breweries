@@ -6,7 +6,7 @@ export default class Advertisement extends Component {
   render() {
     const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
     return (
-      <div>
+      <div className="col-4 mx-auto">
         <div className="card mb-3">
           <div className="card-header">
             Name: {this.props.name} / Type: {this.props.brType}

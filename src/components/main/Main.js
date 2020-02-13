@@ -85,6 +85,6 @@ export default class Main extends Component {
   }
 
   render() {
-    return <div className="container">{this.renderContent()}</div>;
+    return <div className="">{this.renderContent()}</div>;
   }
 }
