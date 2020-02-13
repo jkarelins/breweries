@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Comments from "../Comments/Comments";
+import "./Advertisement.css";
 
 export default class Advertisement extends Component {
   render() {
-    // console.log(this.props);
     const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
     return (
       <div>
@@ -21,10 +21,10 @@ export default class Advertisement extends Component {
                 <br />
                 {phone}
               </p>
-              {this.props.imageUrl ? (
+              {this.props.image ? (
                 <img
-                  src={this.props.imageUrl}
-                  className="img-fluid text-right"
+                  src={this.props.image}
+                  className="img-fluid text-right advImage"
                   alt=""
                 />
               ) : (
