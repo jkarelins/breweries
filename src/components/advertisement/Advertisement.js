@@ -3,10 +3,13 @@ import Comments from "../Comments/Comments";
 import "./Advertisement.css";
 
 export default class Advertisement extends Component {
+  handleChange = () => {
+    this.props.newLike(this.props.id);
+  };
   render() {
     const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
     return (
-      <div>
+      <div className="col-5 mx-auto">
         <div className="card mb-3">
           <div className="card-header">
             Name: {this.props.name} / Type: {this.props.brType}
@@ -31,6 +34,7 @@ export default class Advertisement extends Component {
                 ""
               )}
             </div>
+
             <span className="text-center">
               <a
                 href={this.props.web}
@@ -40,21 +44,25 @@ export default class Advertisement extends Component {
                 Visit our website
               </a>
             </span>
-
-            <Comments
-              id={this.props.id}
-              addComment={this.props.addComment}
-              comments={this.props.comments}
-            />
+            <div className="my-3">
+              <button
+                className="btn btn-outline-dark mr-2"
+                onClick={this.handleChange}
+              >
+                <i className="fab fa-gratipay"> </i>
+              </button>
+              {this.props.likes} Likes
+            </div>
+            <div>
+              <Comments
+                id={this.props.id}
+                addComment={this.props.addComment}
+                comments={this.props.comments}
+              />
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
-
-// brType={brewerie.brewery_type}
-// postCode={brewerie.postal_code}
-// country={brewerie.country}
-// web={brewerie.website_url}
-// update={brewerie.updated_at}

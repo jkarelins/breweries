@@ -8,16 +8,14 @@ export default class Main extends Component {
     error: null
   };
 
-  sortByType = breweries => {
-    return breweries.sort(function(a, b) {
-      return a.brewery_type - b.brewery_type;
-    });
-  };
-
   async componentDidMount() {
     const response = await fetch("https://api.openbrewerydb.org/breweries");
     const data = await response.json();
-    const sorted = data.map(brewerie => ({ ...brewerie, comments: [] }));
+    const sorted = data.map(brewerie => ({
+      ...brewerie,
+      comments: [],
+      likes: 0
+    }));
     await this.fetchImages(sorted);
   }
 
@@ -54,15 +52,33 @@ export default class Main extends Component {
     });
   };
 
+  increment = likeInfo => {
+    const updatedBreweries = this.state.breweries.map(brewerie => {
+      if (brewerie.id === likeInfo) {
+        brewerie.likes = brewerie.likes + 1;
+      }
+      return brewerie;
+    });
+    this.setState({
+      breweries: updatedBreweries
+    });
+  };
+
   renderContent() {
+    const sortedBreweries = this.state.breweries.sort(
+      (a, b) => b.likes - a.likes
+    );
+
     if (this.state.loading) {
       return `<h1>Loading...</h1>`;
     } else if (this.state.error) {
       return `<h1>{this.state.error}</h1>`;
     } else {
-      return this.state.breweries.map(brewerie => {
+      return sortedBreweries.map(brewerie => {
         return (
           <Advertisement
+            likes={brewerie.likes}
+            newLike={this.increment}
             name={brewerie.name}
             key={brewerie.id}
             id={brewerie.id}
@@ -85,6 +101,6 @@ export default class Main extends Component {
   }
 
   render() {
-    return <div className="container">{this.renderContent()}</div>;
+    return <div className="">{this.renderContent()}</div>;
   }
 }
