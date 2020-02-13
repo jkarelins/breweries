@@ -14,41 +14,36 @@ export default class Main extends Component {
     });
   };
 
-  componentDidMount() {
-    fetch("https://api.openbrewerydb.org/breweries")
-      .then(data => data.json())
-      .then(sorted => {
-        sorted.map(brewerie => (brewerie.comments = []));
-        return sorted;
-      })
-      .then(breweries => {
-        this.fetchImages(breweries);
-        this.setState({
-          breweries,
-          loading: false
-        });
-      })
-      .catch(err =>
-        this.setState({
-          error: err,
-          loading: false
-        })
-      );
+  async componentDidMount() {
+    const response = await fetch("https://api.openbrewerydb.org/breweries");
+    const data = await response.json();
+    const sorted = data.map(brewerie => ({ ...brewerie, comments: [] }));
+    await this.fetchImages(sorted);
   }
-  fetchImages = breweries => {
-    breweries.forEach(brewerie => {
-      const firstWord = brewerie.name.replace(" ", "+").split(" ")[0];
-      fetch(
-        `https://pixabay.com/api/?key=15235209-ef7229ba5181d19e97e965940&q=${firstWord}&image_type=photo`
+
+  fetchImages = async breweries => {
+    const promises = breweries.map(brewerie => {
+      const firstWord = brewerie.name.replace(/" "/g, "+").split(" ")[0];
+
+      return fetch(
+        `https://pixabay.com/api/?key=15235209-ef7229ba5181d19e97e965940&q=${encodeURIComponent(
+          firstWord
+        )}&image_type=photo`
       )
         .then(data => data.json())
         .then(data => {
           if (data.total !== 0) {
-            brewerie.image = data.hits[0].webformatURL;
+            return { ...brewerie, image: data.hits[0].webformatURL };
           }
+
+          return brewerie;
         })
         .catch(err => console.log(err));
     });
+
+    const newBreweries = await Promise.all(promises);
+
+    this.setState({ breweries: newBreweries, loading: false });
   };
 
   addComment = commentInfo => {
@@ -65,9 +60,7 @@ export default class Main extends Component {
     } else if (this.state.error) {
       return `<h1>{this.state.error}</h1>`;
     } else {
-      console.log(this.state.breweries);
       return this.state.breweries.map(brewerie => {
-        console.log(brewerie.image);
         return (
           <Advertisement
             name={brewerie.name}
