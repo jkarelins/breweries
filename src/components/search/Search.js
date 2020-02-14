@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Advertisement from "../advertisement/Advertisement";
-import "./Main.css";
+import "./Search.css";
 
 export default class Main extends Component {
   state = {
@@ -10,7 +10,12 @@ export default class Main extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch("https://api.openbrewerydb.org/breweries");
+    const searchfor = this.props.match.params.searchfor;
+    const response = await fetch(
+      `https://api.openbrewerydb.org/breweries/search?query=${encodeURIComponent(
+        searchfor
+      )}`
+    );
     const data = await response.json();
     const sorted = data.map(brewerie => ({
       ...brewerie,
