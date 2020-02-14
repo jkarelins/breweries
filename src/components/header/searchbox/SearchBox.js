@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Search from "../../search/Search";
 
 const initialState = {
-  searchBox: "beer"
+  searchBox: ""
 };
 
 export default class SearchBox extends Component {
@@ -10,48 +11,34 @@ export default class SearchBox extends Component {
     super(props);
     this.state = initialState;
   }
-  reset() {
-    this.setState(initialState);
-  }
 
   handleSearch = e => {
     this.setState({
       searchBox: e.target.value
     });
   };
-
-  componentDidMount() {
-    this.reset();
-  }
-
-  search = () => {
-    this.setState({ redirect: true });
-  };
+  search() {}
 
   render() {
-    if (this.state.redirect === true) {
-      return (
-        <Redirect
-          to={`/search/${this.state.searchBox.split(" ").join("%20")}`}
-        />
-      );
-    }
     return (
       <Fragment>
         <input
-          className="form-control mr-sm-2 col-3"
+          className="form-control mr-sm-2 col-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          value={this.state.searchBox}
           onChange={this.handleSearch}
         />
-        <button
-          className="btn btn-outline-success my-2 my-sm-0"
-          type="button"
-          onClick={this.search}
-        >
-          Search for: {this.state.searchBox}
-        </button>
+        <Link to={`/search/${this.state.searchBox.split(" ").join("%20")}`}>
+          <button
+            className="btn btn-outline-success my-2 my-sm-0"
+            type="button"
+            onClick={this.search}
+          >
+            Search
+          </button>
+        </Link>
       </Fragment>
     );
   }

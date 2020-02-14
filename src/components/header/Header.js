@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SearchBox from "./searchbox/SearchBox";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   render() {
@@ -29,7 +29,7 @@ export default class Header extends Component {
               </Link>
             </li>
           </ul>
-          <SearchBox />
+          {/* <SearchBox /> */}
         </div>
       </nav>
     );

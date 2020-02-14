@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Comments from "../Comments/Comments";
+import { Link } from "react-router-dom";
 import "./Advertisement.css";
 
 export default class Advertisement extends Component {
@@ -11,9 +12,20 @@ export default class Advertisement extends Component {
     return (
       <div className="col-5 mx-auto">
         <div className="card mb-3">
-          <div className="card-header">
-            Name: {this.props.name} / Type: {this.props.brType}
-          </div>
+          <Link
+            to={{
+              pathname: `/brewery/${this.props.id}`,
+              state: {
+                image: this.props.image
+              }
+            }}
+            style={{ textDecoration: "none" }}
+          >
+            <div className="card-header">
+              Name: {this.props.name} / Type: {this.props.brType}
+            </div>
+          </Link>
+
           <div className="card-body">
             <h5 className="card-title text-left">
               {this.props.street}, {this.props.city}, {this.props.state}

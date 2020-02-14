@@ -9,7 +9,11 @@ export default class Main extends Component {
     error: null
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData = async () => {
     const searchfor = this.props.match.params.searchfor;
     const response = await fetch(
       `https://api.openbrewerydb.org/breweries/search?query=${encodeURIComponent(
@@ -23,7 +27,7 @@ export default class Main extends Component {
       likes: 0
     }));
     await this.fetchImages(sorted);
-  }
+  };
 
   fetchImages = async breweries => {
     const promises = breweries.map(brewerie => {
