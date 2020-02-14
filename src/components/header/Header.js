@@ -29,7 +29,7 @@ export default class Header extends Component {
               </Link>
             </li>
           </ul>
-          {/* <SearchBox /> */}
+          <SearchBox />
         </div>
       </nav>
     );

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import Search from "../../search/Search";
 
 const initialState = {
   searchBox: ""
@@ -17,7 +16,6 @@ export default class SearchBox extends Component {
       searchBox: e.target.value
     });
   };
-  search() {}
 
   render() {
     return (
@@ -34,7 +32,6 @@ export default class SearchBox extends Component {
           <button
             className="btn btn-outline-success my-2 my-sm-0"
             type="button"
-            onClick={this.search}
           >
             Search
           </button>

@@ -13,6 +13,13 @@ export default class Main extends Component {
     this.getData();
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps !== this.props) {
+      this.setState({ loading: true });
+      this.getData();
+    }
+  };
+
   getData = async () => {
     const searchfor = this.props.match.params.searchfor;
     const response = await fetch(
@@ -77,6 +84,7 @@ export default class Main extends Component {
     const sortedBreweries = this.state.breweries.sort(
       (a, b) => b.likes - a.likes
     );
+    console.log(sortedBreweries);
 
     if (this.state.loading) {
       return (
@@ -85,31 +93,35 @@ export default class Main extends Component {
         </div>
       );
     } else if (this.state.error) {
-      return `<h1>{this.state.error}</h1>`;
+      return <h1 className="text-danger">{this.state.error}</h1>;
     } else {
-      return sortedBreweries.map(brewerie => {
-        return (
-          <Advertisement
-            likes={brewerie.likes}
-            newLike={this.increment}
-            name={brewerie.name}
-            key={brewerie.id}
-            id={brewerie.id}
-            brType={brewerie.brewery_type}
-            street={brewerie.street}
-            city={brewerie.city}
-            state={brewerie.state}
-            postCode={brewerie.postal_code}
-            country={brewerie.country}
-            phone={brewerie.phone}
-            web={brewerie.website_url}
-            update={brewerie.updated_at}
-            image={brewerie.image}
-            addComment={this.addComment}
-            comments={brewerie.comments}
-          />
-        );
-      });
+      if (sortedBreweries.length === 0) {
+        return <h1 className="text-danger">Sorry, nothing was found.</h1>;
+      } else {
+        return sortedBreweries.map(brewerie => {
+          return (
+            <Advertisement
+              likes={brewerie.likes}
+              newLike={this.increment}
+              name={brewerie.name}
+              key={brewerie.id}
+              id={brewerie.id}
+              brType={brewerie.brewery_type}
+              street={brewerie.street}
+              city={brewerie.city}
+              state={brewerie.state}
+              postCode={brewerie.postal_code}
+              country={brewerie.country}
+              phone={brewerie.phone}
+              web={brewerie.website_url}
+              update={brewerie.updated_at}
+              image={brewerie.image}
+              addComment={this.addComment}
+              comments={brewerie.comments}
+            />
+          );
+        });
+      }
     }
   }
 
