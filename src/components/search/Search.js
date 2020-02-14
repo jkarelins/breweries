@@ -84,7 +84,6 @@ export default class Main extends Component {
     const sortedBreweries = this.state.breweries.sort(
       (a, b) => b.likes - a.likes
     );
-    console.log(sortedBreweries);
 
     if (this.state.loading) {
       return (

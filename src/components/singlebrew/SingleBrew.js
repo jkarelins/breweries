@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class SingleBrew extends Component {
   state = {
@@ -19,16 +20,24 @@ export default class SingleBrew extends Component {
     await this.getContent();
   };
   render() {
-    console.log(this.state.brewery);
     return (
       <div className="container">
         <div className="d-flex justify-content-center">
           <div className="card mt-5 col-6">
-            <img
-              className="card-img-top"
-              src={this.state.image}
-              alt={this.state.brewery.name}
-            />
+            <Link
+              to={{
+                pathname: `/gallery/${this.state.brewery.id}`,
+                state: {
+                  breweryData: this.state.brewery
+                }
+              }}
+            >
+              <img
+                className="card-img-top"
+                src={this.state.image}
+                alt={this.state.brewery.name}
+              />
+            </Link>
             <div className="card-body">
               <h5>{this.state.brewery.name}</h5>
               <p className="card-text">

@@ -3,9 +3,12 @@ import React, { Component } from "react";
 export default class Footer extends Component {
   render() {
     return (
-      <div>
-        <h2>Just footer</h2>
-      </div>
+      <footer className="container mt-5">
+        <p className="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>© Brewery Search React App · Privacy · Terms</p>
+      </footer>
     );
   }
 }

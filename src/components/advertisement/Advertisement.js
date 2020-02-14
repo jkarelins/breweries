@@ -10,7 +10,7 @@ export default class Advertisement extends Component {
   render() {
     const phone = this.props.phone ? `Phone: ${this.props.phone}` : "";
     return (
-      <div className="col-5 mx-auto">
+      <div className="col-sm-12 col-md-10 col-lg-6 col-xl-5 mx-auto">
         <div className="card mb-3">
           <Link
             to={{
