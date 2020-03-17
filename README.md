@@ -1,6 +1,7 @@
 # React starter Project - Breweries list
 
-Project was built during Codaisseur academy. Working with one Collaborator: [Melanie](https://github.com/Mellieejj)
+Project was built during 3rd week of Codaisseur academy.
+Working with one Collaborator: [Melanie](https://github.com/Mellieejj)
 
 ## Used Technology:
 
